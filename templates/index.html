@@ -12,34 +12,39 @@
 <body class="bg-dark text-light">
     <div class="container">
         <h1 class="text-center my-4">PicShare</h1>
-        <div id="authContainer" class="row">
-            <div class="col-12 col-md-6">
-                <h2>Login</h2>
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label for="loginUsername">Username</label>
-                        <input type="text" class="form-control" id="loginUsername" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="loginPassword">Password</label>
-                        <input type="password" class="form-control" id="loginPassword" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </form>
+        <div id="authContainer" class="row justify-content-center">
+            <div class="col-12 col-md-6 mb-4">
+                <div class="card bg-secondary text-light p-4">
+                    <h2 class="card-title text-center">Login</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginUsername">Username</label>
+                            <input type="text" class="form-control" id="loginUsername" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        
+                    </form>
+                </div>
             </div>
             <div class="col-12 col-md-6">
-                <h2>Sign Up</h2>
-                <form id="signupForm">
-                    <div class="form-group">
-                        <label for="signupUsername">Username</label>
-                        <input type="text" class="form-control" id="signupUsername" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="signupPassword">Password</label>
-                        <input type="password" class="form-control" id="signupPassword" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Sign Up</button>
-                </form>
+                <div class="card bg-secondary text-light p-4">
+                    <h2 class="card-title text-center">Sign Up</h2>
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label for="signupUsername">Username</label>
+                            <input type="text" class="form-control" id="signupUsername" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" class="form-control" id="signupPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                    </form>
+                </div>
             </div>
         </div>
         <div id="mainApp" class="d-none">
@@ -57,5 +62,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="../static/scripts.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com">
 </body>
 </html>

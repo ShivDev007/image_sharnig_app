@@ -105,7 +105,9 @@ function loadImages() {
                 imageCard.className = 'imageCard';
                 imageCard.innerHTML = `
                     <img src="${image.image_url}" alt="User Image">
-                    <button onclick="likeImage(${image.id})" id="like-btn-${image.id}">Like (${image.likes})</button>
+                    <button onclick="likeImage(${image.id})" id="like-btn-${image.id}">
+                        <i class="fas fa-thumbs-up"></i> <span id="like-count-${image.id}">${image.likes}</span>
+                    </button>
                 `;
                 col.appendChild(imageCard);
                 imagesContainer.appendChild(col);
@@ -120,9 +122,8 @@ function likeImage(imageId) {
         .then(data => {
             if (data.success) {
                 // Update the like count for the specific image
-                const likeButton = document.getElementById(`like-btn-${imageId}`);
-                const currentLikes = parseInt(likeButton.innerText.match(/\d+/)[0], 10);
-                likeButton.innerText = `Like (${currentLikes + 1})`;
+                const likeCount = document.getElementById(`like-count-${imageId}`);
+                likeCount.innerText = parseInt(likeCount.innerText) + 1;
             } else {
                 alert(data.message);
             }

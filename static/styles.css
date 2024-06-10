@@ -30,6 +30,17 @@ h1 {
     font-weight: 700;
 }
 
+.card {
+    background: #2e2e2e;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.card-title {
+    margin-bottom: 20px;
+}
+
 #imagesContainer {
     display: flex;
     flex-wrap: wrap;
@@ -70,10 +81,22 @@ h1 {
     cursor: pointer;
     border-radius: 0 0 10px 10px;
     transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .imageCard button:hover {
     background-color: #e05656;
+}
+
+.imageCard button i {
+    transition: transform 0.3s;
+}
+
+.imageCard button:hover i {
+    transform: scale(1.2);
 }
 
 .custom-file-upload {
