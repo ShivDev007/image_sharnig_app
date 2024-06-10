@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         const username = document.getElementById('loginUsername').value;
         const password = document.getElementById('loginPassword').value;
-        
+
         fetch('/login', {
             method: 'POST',
             headers: {
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         const username = document.getElementById('signupUsername').value;
         const password = document.getElementById('signupPassword').value;
-        
+
         fetch('/signup', {
             method: 'POST',
             headers: {
@@ -93,6 +93,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadImages() {
+    const isLoggedIn = !document.getElementById('authContainer').classList.contains('d-none');
+
     fetch('/images')
         .then(response => response.json())
         .then(data => {
@@ -100,16 +102,18 @@ function loadImages() {
             imagesContainer.innerHTML = '';
             data.images.forEach(image => {
                 const col = document.createElement('div');
-                col.className = 'col-12 col-sm-6 col-md-4 col-lg-3 mb-4';
-                const imageCard = document.createElement('div');
-                imageCard.className = 'imageCard';
-                imageCard.innerHTML = `
-                    <img src="${image.image_url}" alt="User Image">
-                    <button onclick="likeImage(${image.id})" id="like-btn-${image.id}">
-                        <i class="fas fa-thumbs-up"></i> <span id="like-count-${image.id}">${image.likes}</span>
-                    </button>
+                col.className = 'col-md-3';
+                col.innerHTML = `
+                    <div class="cardholder">
+                        <div class="imageCard">
+                            <img src="${image.image_url}" alt="User Image">
+                            <p class="desc">Image Description</p>
+                            <button onclick="likeImage(${image.id})" class="likeButton" id="like-btn-${image.id}" ${isLoggedIn ? '' : 'disabled'}>
+                                <i class="fas fa-thumbs-up"></i> <span id="like-count-${image.id}">${image.likes}</span>
+                            </button>
+                        </div>
+                    </div>
                 `;
-                col.appendChild(imageCard);
                 imagesContainer.appendChild(col);
             });
         })
