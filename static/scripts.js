@@ -1,20 +1,95 @@
-document.getElementById('imageInput').addEventListener('change', function() {
-    const formData = new FormData();
-    formData.append('image', document.getElementById('imageInput').files[0]);
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if user is logged in
+    fetch('/images')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success === false && data.message === "User not logged in") {
+                document.getElementById('authContainer').classList.remove('d-none');
+            } else {
+                document.getElementById('mainApp').classList.remove('d-none');
+                loadImages();
+            }
+        })
+        .catch(error => console.error('Error:', error));
 
-    fetch('/upload', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            loadImages();
-        } else {
-            alert('Image upload failed');
-        }
-    })
-    .catch(error => console.error('Error:', error));
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('authContainer').classList.add('d-none');
+                document.getElementById('mainApp').classList.remove('d-none');
+                loadImages();
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('signupUsername').value;
+        const password = document.getElementById('signupPassword').value;
+        
+        fetch('/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('User registered successfully. Please log in.');
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    document.getElementById('logoutButton').addEventListener('click', function() {
+        fetch('/logout', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('mainApp').classList.add('d-none');
+                    document.getElementById('authContainer').classList.remove('d-none');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+
+    document.getElementById('imageInput').addEventListener('change', function() {
+        const formData = new FormData();
+        formData.append('image', document.getElementById('imageInput').files[0]);
+
+        fetch('/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                loadImages();
+            } else {
+                alert('Image upload failed');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
 });
 
 function loadImages() {
@@ -49,10 +124,8 @@ function likeImage(imageId) {
                 const currentLikes = parseInt(likeButton.innerText.match(/\d+/)[0], 10);
                 likeButton.innerText = `Like (${currentLikes + 1})`;
             } else {
-                alert('Failed to like image');
+                alert(data.message);
             }
         })
         .catch(error => console.error('Error:', error));
 }
-
-document.addEventListener('DOMContentLoaded', loadImages);
